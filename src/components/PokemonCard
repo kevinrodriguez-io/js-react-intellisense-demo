@@ -1,0 +1,25 @@
+import React from 'react';
+import { Card, Image } from 'semantic-ui-react';
+
+/** 
+ * PokemonCard component
+ * @param {Object} props - Props
+ * @param {string} props.name - Pokemon name
+ * @param {string[]} props.types - Pokemon types
+ * @param {string} props.photoUrl - Pokemon picture
+ * @param {Object} props.style - Custom styles
+*/
+const PokemonCard = ({ name, types, photoUrl, style }) => {
+  const concatenatedTypes = types.reduce((a,b) => `${a} | ${b}`);
+  return (
+    <Card style={style}>
+      <Image src={photoUrl} wrapped ui={false} />
+      <Card.Content>
+        <Card.Header>{name}</Card.Header>
+        <Card.Meta>{concatenatedTypes}</Card.Meta>
+      </Card.Content>
+    </Card>
+  );
+};
+
+export default PokemonCard;
