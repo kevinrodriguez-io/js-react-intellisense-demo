@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import PersonCard from './PersonCard';
+import PokemonCard from './PokemonCard';
 import { centerBlock, mt1, height100vh } from '../ui/styles';
 import { Grid, GridRow, Loader, Segment, Dimmer } from 'semantic-ui-react';
 
 export default () => {
-  const [users, setUsers] = useState([]);
+  const [pokemons, setPokemons] = useState([]);
 
-  const fetchUsers = async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users');
+  const fetchPokemons = async () => {
+    const response = await fetch('https://raw.githubusercontent.com/biuni/pokemongo-pokedex/master/pokedex.json');
     const json = await response.json();
-    setUsers(json);
+    setPokemons(json.pokemon);
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchPokemons();
   }, []);
 
 
-  if (users.length === 0) {
+  if (pokemons.length === 0) {
     return (
       <Segment style={height100vh}>
         <Dimmer active>
@@ -30,12 +30,12 @@ export default () => {
   return (
     <Grid relaxed padded>
       <GridRow>
-        {users.map(user =>
-          <PersonCard
+        {pokemons.map(pokemon =>
+          <PokemonCard
             style={{ ...centerBlock, ...mt1 }}
-            name={user.name}
-            email={user.email}
-            photoUrl="http://placehold.it/500x300"
+            name={pokemon.name}
+            types={pokemon.type}
+            photoUrl={pokemon.img}
           />)
         }
       </GridRow>
